@@ -1,12 +1,12 @@
 package com.example.freecalcaccessibility
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.freecalcaccessibility.databinding.ActivityMainBinding
-
 import com.google.android.material.slider.Slider
 
 class MainActivity : AppCompatActivity() {
@@ -25,11 +25,11 @@ class MainActivity : AppCompatActivity() {
             binding.modeSlider.contentDescription = "Currently on" + mode
         }
         panels = Array(7) { GridLayout(this) }
-
+        ConfigurePanels()
     }
 
     private fun ConfigurePanels() {
-        // mode 1 Options
+        // mode 1 Options     Not completed
         panels[0].rowCount = 5
         panels[0].columnCount = 1
         val radModeSelect = RadioGroup(this)
@@ -45,6 +45,23 @@ class MainActivity : AppCompatActivity() {
         panels[0].addView(radModeSelect)
         var slider_accu = Slider(this)
         slider_accu.contentDescription = "Decimal Accuracy"
+        var layout: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(binding.modeSlider.layoutParams)
+        layout.topToBottom = R.id.mode_slider
+        panels[0].layoutParams = layout
         binding.mainLayout.addView(panels[0])
+
+        // mode 2 Actions
+
+        // mode 3 Memory
+
+        // mode 4 Numbers
+
+        // mode 5 Operators
+
+        // mode 6 Functions
+
+        // mode 7 Constants
+
+
     }
 }
