@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">FreeCalc Accessibility</string>
+    <string name="title_text">Welcome to Free Calculator Accessibility mode! Please make sure TalkBack is enabled. Slide right to begin using.</string>
+    <string name="eq_form_hint">Expression text box, currently empty.</string>
+    <string name="mode_slider_default_desc">Slide right to switch modes. Currently on 1, options.</string>
+    <string name="mode_slider_1">Options</string>
+    <string name="mode_slider_2">Actions</string>
+    <string name="mode_slider_3">Memory</string>
+    <string name="mode_slider_4">Numbers</string>
+    <string name="mode_slider_5">Operators</string>
+    <string name="mode_slider_6">Functions</string>
+    <string name="mode_slider_7">Constants</string>
+    <string name="radian_text">Radian</string>
+    <string name="degree_text">Degree</string>
+    <string name="btn_about">About</string>
+    <string name="dec_accu">Decimal Accuracy</string>
 </resources>

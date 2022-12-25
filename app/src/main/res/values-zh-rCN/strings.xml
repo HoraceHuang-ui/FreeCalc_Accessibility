@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">自由计算器 无障碍</string>
+    <string name="title_text">欢迎来到无障碍自由计算器！请确保 TalkBack 已打开。向右滑动以继续。</string>
+    <string name="eq_form_hint">算式输入框，当前为空。</string>
+    <string name="mode_slider_default_desc">右滑选择模式。当前为1，选项。</string>
+    <string name="mode_slider_1">选项</string>
+    <string name="mode_slider_2">操作</string>
+    <string name="mode_slider_3">记忆值</string>
+    <string name="mode_slider_4">数字</string>
+    <string name="mode_slider_5">运算符</string>
+    <string name="mode_slider_6">函数</string>
+    <string name="mode_slider_7">常量</string>
+    <string name="radian_text">弧度制</string>
+    <string name="degree_text">角度制</string>
+    <string name="btn_about">关于</string>
+    <string name="dec_accu">小数精确位数</string>
+</resources>
