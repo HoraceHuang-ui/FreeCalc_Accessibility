@@ -35,4 +35,15 @@
     <string name="btn_rPar">Right Parenthesis</string>
     <string name="btn_mod">Modulo</string>
     <string name="btn_comma">Comma</string>
+    <string name="sqr">Square root</string>
+    <string name="sin">Sine. Currently in %s mode.</string>
+    <string name="cos">Cosine. Currently in %s mode</string>
+    <string name="tan">Tangent. Currently in %s mode.</string>
+    <string name="cot">Cotangent. Currently in %s mode.</string>
+    <string name="abs">Absolute</string>
+    <string name="cei">Ceiling</string>
+    <string name="flo">Floor</string>
+    <string name="log">Logarithm</string>
+    <string name="const_e">Euler\'s Number, 2.7182818</string>
+    <string name="const_p">Pi, 3.1415927</string>
 </resources>
