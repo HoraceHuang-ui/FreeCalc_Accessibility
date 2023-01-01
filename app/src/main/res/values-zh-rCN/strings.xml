@@ -15,4 +15,25 @@
     <string name="degree_text">角度制</string>
     <string name="btn_about">关于</string>
     <string name="dec_accu">小数精确位数</string>
+    <string name="btn_read">朗读当前算式</string>
+    <string name="btn_calc">计算</string>
+    <string name="btn_clear">清除</string>
+    <string name="btn_backsp">退格</string>
+    <string name="btn_lCur">光标左移</string>
+    <string name="btn_rCur">光标右移</string>
+    <string name="mem_text">当前存储值为 %f</string>
+    <string name="btn_mc">记忆值清除</string>
+    <string name="btn_mp">记忆值追加</string>
+    <string name="btn_mm">记忆值减去</string>
+    <string name="btn_mr">插入记忆值</string>
+    <string name="btn_plus">加</string>
+    <string name="btn_minus">减</string>
+    <string name="btn_times">乘</string>
+    <string name="btn_div">除</string>
+    <string name="btn_pwr">乘方</string>
+    <string name="btn_dot">点</string>
+    <string name="btn_lPar">左括号</string>
+    <string name="btn_rPar">右括号</string>
+    <string name="btn_mod">取余</string>
+    <string name="btn_comma">逗号</string>
 </resources>
