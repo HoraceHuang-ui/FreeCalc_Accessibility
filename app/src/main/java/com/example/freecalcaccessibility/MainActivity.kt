@@ -3,6 +3,7 @@ package com.example.freecalcaccessibility
 import android.annotation.SuppressLint
 import android.icu.number.IntegerWidth
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.eqForm.inputType = EditorInfo.TYPE_NULL
 
         binding.modeSlider.addOnChangeListener { _, value, _ ->
             mode = value.toInt()
@@ -192,7 +195,7 @@ class MainActivity : AppCompatActivity() {
         panels[4].rowCount = 4
         panels[4].columnCount = 3
         val btn_ops = "+-*/^.()%,"
-        val desc_ids = arrayOf(
+        val desc_op_ids = arrayOf(
             R.string.btn_plus, R.string.btn_minus, R.string.btn_times,
             R.string.btn_div, R.string.btn_pwr, R.string.btn_dot,
             R.string.btn_lPar, R.string.btn_rPar, R.string.btn_mod,
@@ -200,7 +203,7 @@ class MainActivity : AppCompatActivity() {
         )
         val btns_ops = Array(10) { MaterialButton(this) }
         for ((i, c) in btn_ops.withIndex()) {
-            btns_ops[i].text = getString(desc_ids[i])
+            btns_ops[i].text = getString(desc_op_ids[i])
             btns_ops[i].setOnClickListener {
                 val s = binding.eqForm.text.toString()
                 var temp = binding.eqForm.selectionStart
@@ -220,9 +223,73 @@ class MainActivity : AppCompatActivity() {
         binding.mainLayout.addView(panels[4])
 
         // mode 6 Functions
+        panels[5].rowCount = 9
+        panels[5].columnCount = 1
+        val funcs = arrayOf( "sqr", "sin", "cos",
+            "tan", "cot", "abs", "cei", "flo", "log" )
+        val desc_fn_ids = arrayOf(
+            R.string.sqr, R.string.sin, R.string.cos,
+            R.string.tan, R.string.cot, R.string.abs,
+            R.string.cei, R.string.flo, R.string.log
+        )
+        val btns_funcs = Array(9) { MaterialButton(this) }
+        for ((i, fn) in funcs.withIndex()) {
+            btns_funcs[i].text = when (i) {
+                0, 5, 6, 7, 8 -> {
+                    getString(desc_fn_ids[i])
+                }
+                else -> {
+                    when (deg) {
+                        true -> String.format(getString(desc_fn_ids[i]), getString(R.string.degree_text))
+                        false -> String.format(getString(desc_fn_ids[i]), getString(R.string.radian_text))
+                    }
+                }
+            }
+            btns_funcs[i].setOnClickListener {
+                val s = binding.eqForm.text.toString()
+                var temp = binding.eqForm.selectionStart
+                binding.eqForm.setText(s.substring(0 until temp) +
+                    fn +
+                    if (s.isEmpty()) { "_" } else { "" } +
+                    s.substring(binding.eqForm.selectionEnd))
+                temp += 3
+                binding.eqForm.setSelection(temp)
+            }
+            panels[5].addView(btns_funcs[i])
+        }
+        val layout5: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(binding.modeSlider.layoutParams)
+        layout5.topToBottom = R.id.mode_slider
+        panels[5].layoutParams = layout5
+        panels[5].isGone = true
+        binding.mainLayout.addView(panels[5])
 
         // mode 7 Constants
-
+        panels[6].rowCount = 2
+        panels[6].columnCount = 1
+        val consts = "EP"
+        val desc_const_ids = arrayOf(
+            R.string.const_e, R.string.const_p
+        )
+        val btns_consts = Array(2) { MaterialButton(this) }
+        for ((i, c) in consts.withIndex()) {
+            btns_consts[i].text = getString(desc_const_ids[i])
+            btns_consts[i].setOnClickListener {
+                val s = binding.eqForm.text.toString()
+                var temp = binding.eqForm.selectionStart
+                binding.eqForm.setText(s.substring(0 until temp) +
+                    c +
+                    if (s.isEmpty()) { "_" } else { "" } +
+                    s.substring(binding.eqForm.selectionEnd))
+                temp++
+                binding.eqForm.setSelection(temp)
+            }
+            panels[6].addView(btns_consts[i])
+        }
+        val layout6: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(binding.modeSlider.layoutParams)
+        layout6.topToBottom = R.id.mode_slider
+        panels[6].layoutParams = layout6
+        panels[6].isGone = true
+        binding.mainLayout.addView(panels[6])
     }
 
     private fun SwitchMode() {
