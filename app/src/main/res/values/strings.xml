@@ -14,4 +14,25 @@
     <string name="degree_text">Degree</string>
     <string name="btn_about">About</string>
     <string name="dec_accu">Decimal Accuracy</string>
+    <string name="btn_read">Read out current expression</string>
+    <string name="btn_calc">Calculate</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_backsp">Backspace</string>
+    <string name="btn_lCur">Move cursor left</string>
+    <string name="btn_rCur">Move cursor right</string>
+    <string name="mem_text">%f in memory</string>
+    <string name="btn_mc">Memory Clear</string>
+    <string name="btn_mp">Memory Addition</string>
+    <string name="btn_mm">Memory Subtraction</string>
+    <string name="btn_mr">Memory Recall</string>
+    <string name="btn_plus">Plus</string>
+    <string name="btn_minus">Minus</string>
+    <string name="btn_times">Times</string>
+    <string name="btn_div">Divide</string>
+    <string name="btn_pwr">Power</string>
+    <string name="btn_dot">Dot</string>
+    <string name="btn_lPar">Left Parenthesis</string>
+    <string name="btn_rPar">Right Parenthesis</string>
+    <string name="btn_mod">Modulo</string>
+    <string name="btn_comma">Comma</string>
 </resources>
