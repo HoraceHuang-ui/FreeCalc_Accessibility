@@ -37,14 +37,15 @@
     <string name="btn_mod">取余</string>
     <string name="btn_comma">逗号</string>
     <string name="sqr">平方根</string>
-    <string name="sin">正弦，当前为%s</string>
-    <string name="cos">余弦，当前为%s</string>
-    <string name="tan">正切，当前为%s</string>
-    <string name="cot">余切，当前为%s</string>
+    <string name="sin">正弦</string>
+    <string name="cos">余弦</string>
+    <string name="tan">正切</string>
+    <string name="cot">余切</string>
     <string name="abs">绝对值</string>
     <string name="cei">向上取整</string>
     <string name="flo">向下取整</string>
     <string name="log">对数</string>
     <string name="const_e">自然对数的底数，2.7182818</string>
     <string name="const_p">圆周率，3.1415927</string>
+    <string name="current_mode">当前为%s</string>
 </resources>

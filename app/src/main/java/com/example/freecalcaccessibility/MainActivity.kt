@@ -1,7 +1,6 @@
 package com.example.freecalcaccessibility
 
 import android.annotation.SuppressLint
-import android.icu.number.IntegerWidth
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.*
@@ -10,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import com.example.freecalcaccessibility.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.Slider
 
 class MainActivity : AppCompatActivity() {
@@ -40,14 +40,26 @@ class MainActivity : AppCompatActivity() {
                 6 -> getString(R.string.mode_slider_6)
                 else -> getString(R.string.mode_slider_7)
             }
-            SwitchMode()
+            switchMode()
         }
+        val mode_formatter = LabelFormatter {
+            when (it) {
+                1f -> getString(R.string.mode_slider_1)
+                2f -> getString(R.string.mode_slider_2)
+                3f -> getString(R.string.mode_slider_3)
+                4f -> getString(R.string.mode_slider_4)
+                5f -> getString(R.string.mode_slider_5)
+                6f -> getString(R.string.mode_slider_6)
+                else -> getString(R.string.mode_slider_7)
+            }
+        }
+        binding.modeSlider.setLabelFormatter(mode_formatter)
         panels = Array(7) { GridLayout(this) }
-        ConfigurePanels()
+        configurePanels()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun ConfigurePanels() {
+    private fun configurePanels() {
         // mode 1 Options
         panels[0].rowCount = 5
         panels[0].columnCount = 1
@@ -107,19 +119,56 @@ class MainActivity : AppCompatActivity() {
         val btn_back = MaterialButton(this)
         btn_back.text = getString(R.string.btn_backsp)
         btn_back.setOnClickListener {
-
+            val s = binding.eqForm.text.toString()
+            val temp = binding.eqForm.selectionStart
+            if (temp != 0) {
+                binding.eqForm.setText(
+                    s.substring(0 until binding.eqForm.selectionStart - 1) + s.substring(
+                        binding.eqForm.selectionEnd
+                    )
+                )
+                binding.eqForm.setSelection(temp - 1)
+            }
         }
         panels[1].addView(btn_back)
         val btn_lCur = MaterialButton(this)
         btn_lCur.text = getString(R.string.btn_lCur)
         btn_lCur.setOnClickListener {
-
+            val temp = binding.eqForm.selectionStart
+            if (temp != 0) {
+                val s = binding.eqForm.text.toString()
+                binding.eqForm.setText(s.substring(0 until temp-1) + "_" + s[temp-1] + s.substring(temp+1))
+                binding.eqForm.setSelection(temp - 1)
+            }
+        }
+        btn_lCur.setOnLongClickListener {
+            val temp = binding.eqForm.selectionStart
+            if (temp != 0) {
+                val s = binding.eqForm.text.toString()
+                binding.eqForm.setText("_" + s.substring(0 until temp-1) + s[temp-1] + s.substring(temp+1))
+                binding.eqForm.setSelection(0)
+            }
+            true
         }
         panels[1].addView(btn_lCur)
         val btn_rCur = MaterialButton(this)
         btn_rCur.text = getString(R.string.btn_rCur)
         btn_rCur.setOnClickListener {
-
+            val temp = binding.eqForm.selectionStart
+            if (binding.eqForm.length() != 0 && temp != binding.eqForm.length()-1) {
+                val s = binding.eqForm.text.toString()
+                binding.eqForm.setText(s.substring(0 until temp) + s[temp+1] + "_" + s.substring(temp+2))
+                binding.eqForm.setSelection(temp + 1)
+            }
+        }
+        btn_rCur.setOnLongClickListener {
+            val temp = binding.eqForm.selectionStart
+            if (binding.eqForm.length() != 0 && temp != binding.eqForm.length()-1) {
+                val s = binding.eqForm.text.toString()
+                binding.eqForm.setText(s.substring(0 until temp) + s[temp+1] + s.substring(temp+2) + "_")
+                binding.eqForm.setSelection(binding.eqForm.length() - 1)
+            }
+            true
         }
         panels[1].addView(btn_rCur)
 
@@ -133,12 +182,13 @@ class MainActivity : AppCompatActivity() {
         panels[2].rowCount = 5
         panels[2].columnCount = 1
         val mem_text = TextView(this)
+        mem_text.tag = "mem_text"
         mem_text.text = String.format(getString(R.string.mem_text), mem)
         panels[2].addView(mem_text)
         val btn_mc = MaterialButton(this)
         btn_mc.text = getString(R.string.btn_mc)
         btn_mc.setOnClickListener {
-
+            setM(0.0)
         }
         panels[2].addView(btn_mc)
         val btn_mp = MaterialButton(this)
@@ -240,8 +290,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> {
                     when (deg) {
-                        true -> String.format(getString(desc_fn_ids[i]), getString(R.string.degree_text))
-                        false -> String.format(getString(desc_fn_ids[i]), getString(R.string.radian_text))
+                        true -> getString(desc_fn_ids[i]) + ", " + getString(R.string.current_mode).format(getString(R.string.degree_text))
+                        false -> getString(desc_fn_ids[i]) + ", " + getString(R.string.current_mode).format(getString(R.string.radian_text))
                     }
                 }
             }
@@ -292,7 +342,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainLayout.addView(panels[6])
     }
 
-    private fun SwitchMode() {
+    private fun switchMode() {
         for (panel in panels) {
             if (!panel.isGone) {
                 panel.isGone = true
@@ -300,5 +350,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
         panels[mode-1].isGone = false
+    }
+
+    // TODO: Read expression unfinished
+    private fun readExpr() {
+        val s = binding.eqForm.text
+        loop@ for ((i, c) in s.withIndex()) {
+            when (c) {
+                in '0'..'9' -> continue@loop
+                in 'a'..'z' -> {
+                    val funcMap = mapOf(
+                        "sqr" to R.string.sqr,
+                        "sin" to R.string.sin,
+                        "cos" to R.string.cos,
+                        "tan" to R.string.tan,
+                        "cot" to R.string.cot,
+                        "abs" to R.string.abs,
+                        "cei" to R.string.cei,
+                        "flo" to R.string.flo
+                    )
+                }
+            }
+        }
+    }
+
+    private fun setM(m: Double) {
+        mem = m
+        var mem_text = panels[2].findViewWithTag<TextView>("mem_text")
+        mem_text.text = getString(R.string.mem_text).format(mem)
     }
 }
